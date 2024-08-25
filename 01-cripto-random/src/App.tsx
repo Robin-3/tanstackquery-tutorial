@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import "./App.css";
+import { RandomNumber } from "./components/RandomNumber";
 
 const getCriptoNumber = async (): Promise<number> => {
   const resp = await fetch(
@@ -18,12 +19,14 @@ export const App = () => {
     refetch
   } = useQuery({
     queryKey: ["randomNumber"],
-    queryFn: getCriptoNumber
+    queryFn: getCriptoNumber,
+    staleTime: 1000 * 5 // 5seg
   });
 
   return (
     <>
       <h1>{isLoading ? "Cargando" : `Número: ${number}`}</h1>
+      <RandomNumber />
       <div>{JSON.stringify(error)}</div>
       <button onClick={() => refetch()} disabled={isFetching}>
         Nuevo número
