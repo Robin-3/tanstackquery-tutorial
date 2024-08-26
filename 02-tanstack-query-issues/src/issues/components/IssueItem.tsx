@@ -2,7 +2,8 @@ import { FiInfo, FiMessageSquare, FiCheckCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { State, type GithubIssue } from "../interfaces";
 import { useQueryClient } from "@tanstack/react-query";
-import { getIssue } from "../actions";
+import { getIssueComments } from "../actions";
+import { useEffect } from "react";
 
 interface Props {
   issue: GithubIssue;
@@ -14,21 +15,21 @@ export const IssueItem = ({ issue }: Props) => {
 
   const prefetchData = () => {
     queryClient.prefetchQuery({
-      queryKey: ["issues", issue.number],
-      queryFn: () => getIssue(issue.number),
+      queryKey: ["issues", issue.number, "comments"],
+      queryFn: () => getIssueComments(issue.number),
       staleTime: 1000 * 60 // 1min
     });
   };
 
-  const presetData = () => {
+  useEffect(() => {
     queryClient.setQueryData(["issues", issue.number], issue, {
       updatedAt: Date.now() + 1000 * 60 // now + 1min
     });
-  };
+  }, [issue, queryClient]);
 
   return (
     <div
-      onMouseEnter={presetData}
+      onMouseEnter={prefetchData}
       className="animate-fadeIn flex items-center px-2 py-3 mb-5 border rounded-md bg-slate-900 hover:bg-slate-800"
     >
       {issue.state === State.Close ? (
@@ -48,8 +49,18 @@ export const IssueItem = ({ issue }: Props) => {
           {`#${issue.number} opened 2 days ago by `}
           <span className="font-bold">{issue.user.login}</span>
         </span>
+        <div className="flex flex-wrap">
+          {issue.labels.map((label) => (
+            <span
+              key={label.id}
+              className="mx-2 px-1 py-1 text-xs text-white rounded-md"
+              style={{ border: `1px solid #${label.color}` }}
+            >
+              {label.name}
+            </span>
+          ))}
+        </div>
       </div>
-
       <img
         src={issue.user.avatar_url}
         alt="User Avatar"
