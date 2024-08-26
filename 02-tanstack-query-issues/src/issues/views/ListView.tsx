@@ -8,7 +8,7 @@ import { State } from "../interfaces";
 export const ListView = () => {
   const [state, setState] = useState<State>(State.All);
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
-  const { page, issuesQuery, prevPage, nextPage } = useIssues({
+  const { issuesQuery } = useIssues({
     state,
     selectedLabels
   });
@@ -28,24 +28,14 @@ export const ListView = () => {
         {issuesQuery.isLoading ? (
           <LoadingSpinner />
         ) : (
-          <>
+          <div className="flex flex-col justify-center">
             <IssueList issues={issues} onStateChange={setState} state={state} />
-            <div className="flex justify-between items-center">
-              <button
-                className="p-2 bg-blue-500 rounded-md hover:bg-blue-700 transition-all"
-                onClick={prevPage}
-              >
-                Anteriores
-              </button>
-              <span>{page}</span>
-              <button
-                className="p-2 bg-blue-500 rounded-md hover:bg-blue-700 transition-all"
-                onClick={nextPage}
-              >
-                Siguientes
-              </button>
-            </div>
-          </>
+            <button
+              className="p-2 bg-blue-500 rounded-md hover:bg-blue-700 transition-all"
+            >
+              Cargar más
+            </button>
+          </div>
         )}
       </div>
       <div className="col-span-1 px-2">
