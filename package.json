@@ -5,11 +5,13 @@
   "main": "index.js",
   "workspaces": [
     "01-cripto-random",
-    "02-tanstack-query-issues"
+    "02-tanstack-query-issues",
+    "03-react-query-store"
   ],
   "scripts": {
     "01-dev": "npm run dev --workspace=01-cripto-random",
-    "02-dev": "npm run dev --workspace=02-tanstack-query-issues"
+    "02-dev": "npm run dev --workspace=02-tanstack-query-issues",
+    "03-dev": "npm run dev --workspace=03-react-query-store"
   },
   "keywords": [],
   "author": "",
