@@ -9,3 +9,5 @@ export { type Product } from "./interfaces/product";
 export { productsApi } from "./api/productsApi";
 export * as productActions from "./services/actions";
 export { useProducts } from "./hooks/useProducts";
+export { ProductById } from "./pages/ProductById";
+export { useProduct } from "./hooks/useProduct";
