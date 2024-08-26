@@ -1,5 +1,6 @@
 import axios from "axios";
 
 export const productsApi = axios.create({
-  baseURL: "http://localhost:3100"
+  baseURL: "http://localhost:3100",
+  withCredentials: true
 });
