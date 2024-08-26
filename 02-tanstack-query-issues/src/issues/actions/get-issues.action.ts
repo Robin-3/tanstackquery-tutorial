@@ -9,6 +9,7 @@ export const getIssues = async (
   await sleep(1500);
 
   const params = new URLSearchParams();
+  params.append("per_page", "5");
 
   if (state !== State.All) {
     params.append("state", state);
