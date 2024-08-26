@@ -61,6 +61,7 @@ export type Reactions = {
 } & Record<string, number>;
 
 export enum State {
+  All = "all",
   Open = "open",
   Close = "close"
 }
