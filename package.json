@@ -6,12 +6,14 @@
   "workspaces": [
     "01-cripto-random",
     "02-tanstack-query-issues",
-    "03-react-query-store"
+    "03-react-query-store",
+    "04-fake-api-store"
   ],
   "scripts": {
     "01-dev": "npm run dev --workspace=01-cripto-random",
     "02-dev": "npm run dev --workspace=02-tanstack-query-issues",
-    "03-dev": "npm run dev --workspace=03-react-query-store"
+    "03-dev": "npm run dev --workspace=03-react-query-store",
+    "04-dev": "npm run start --workspace=04-fake-api-store"
   },
   "keywords": [],
   "author": "",
