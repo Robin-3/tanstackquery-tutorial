@@ -2,10 +2,7 @@ import { FiInfo, FiMessageSquare, FiCheckCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { State, type GithubIssue } from "../interfaces";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  getIssue
-  // getIssueComments
-} from "../actions";
+import { getIssue } from "../actions";
 
 interface Props {
   issue: GithubIssue;
@@ -21,16 +18,17 @@ export const IssueItem = ({ issue }: Props) => {
       queryFn: () => getIssue(issue.number),
       staleTime: 1000 * 60 // 1min
     });
-    // queryClient.prefetchQuery({
-    //   queryKey: ["issues", issue.number, "comments"],
-    //   queryFn: () => getIssueComments(issue.number),
-    //   staleTime: 1000 * 60 // 1min
-    // });
+  };
+
+  const presetData = () => {
+    queryClient.setQueryData(["issues", issue.number], issue, {
+      updatedAt: Date.now() + 1000 * 60 // now + 1min
+    });
   };
 
   return (
     <div
-      onMouseEnter={prefetchData}
+      onMouseEnter={presetData}
       className="animate-fadeIn flex items-center px-2 py-3 mb-5 border rounded-md bg-slate-900 hover:bg-slate-800"
     >
       {issue.state === State.Close ? (
