@@ -11,3 +11,4 @@ export * as productActions from "./services/actions";
 export { useProducts } from "./hooks/useProducts";
 export { ProductById } from "./pages/ProductById";
 export { useProduct } from "./hooks/useProduct";
+export { usePrefetchProduct } from "./hooks/usePrefetchProduct";
