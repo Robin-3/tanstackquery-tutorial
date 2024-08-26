@@ -56,18 +56,9 @@ export interface PullRequest {
   merged_at: null;
 }
 
-export interface Reactions {
+export type Reactions = {
   url: string;
-  total_count: number;
-  "+1": number;
-  "-1": number;
-  laugh: number;
-  hooray: number;
-  confused: number;
-  heart: number;
-  rocket: number;
-  eyes: number;
-}
+} & Record<string, number>;
 
 export enum State {
   Open = "open",
