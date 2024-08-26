@@ -8,7 +8,10 @@ import { State } from "../interfaces";
 export const ListView = () => {
   const [state, setState] = useState<State>(State.All);
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
-  const { issuesQuery } = useIssues({ state, selectedLabels });
+  const { page, issuesQuery, prevPage, nextPage } = useIssues({
+    state,
+    selectedLabels
+  });
   const issues = issuesQuery.data ?? [];
 
   const onLabelSelected = (label: string) => {
@@ -28,11 +31,17 @@ export const ListView = () => {
           <>
             <IssueList issues={issues} onStateChange={setState} state={state} />
             <div className="flex justify-between items-center">
-              <button className="p-2 bg-blue-500 rounded-md hover:bg-blue-700 transition-all">
+              <button
+                className="p-2 bg-blue-500 rounded-md hover:bg-blue-700 transition-all"
+                onClick={prevPage}
+              >
                 Anteriores
               </button>
-              <span>{1}</span>
-              <button className="p-2 bg-blue-500 rounded-md hover:bg-blue-700 transition-all">
+              <span>{page}</span>
+              <button
+                className="p-2 bg-blue-500 rounded-md hover:bg-blue-700 transition-all"
+                onClick={nextPage}
+              >
                 Siguientes
               </button>
             </div>
