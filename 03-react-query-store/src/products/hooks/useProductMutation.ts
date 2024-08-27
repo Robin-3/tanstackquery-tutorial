@@ -19,7 +19,7 @@ export const useProductMutation = () => {
     },
     onSuccess: (data, _variable, context) => {
       queryClient.removeQueries({
-        queryKey: ["products", context.optimisticProduct.id]
+        queryKey: ["product", context.optimisticProduct.id]
       });
       queryClient.setQueryData<Product[]>(
         ["products", { filterKey: data.category }],
@@ -27,6 +27,20 @@ export const useProductMutation = () => {
           if (!old) return [data];
           return old.map((cache) =>
             cache.id === context.optimisticProduct.id ? data : cache
+          );
+        }
+      );
+    },
+    onError: (error, variable, context) => {
+      queryClient.removeQueries({
+        queryKey: ["product", context?.optimisticProduct.id]
+      });
+      queryClient.setQueryData<Product[]>(
+        ["products", { filterKey: variable.category }],
+        (old) => {
+          if (!old) return [];
+          return old.filter(
+            (cache) => cache.id !== context?.optimisticProduct.id
           );
         }
       );
