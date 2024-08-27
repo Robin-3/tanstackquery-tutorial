@@ -15,13 +15,19 @@ export const useProductMutation = () => {
           return [...old, optimisticProduct];
         }
       );
+      return { optimisticProduct };
     },
-    onSuccess: (data) => {
+    onSuccess: (data, _variable, context) => {
+      queryClient.removeQueries({
+        queryKey: ["products", context.optimisticProduct.id]
+      });
       queryClient.setQueryData<Product[]>(
         ["products", { filterKey: data.category }],
         (old) => {
           if (!old) return [data];
-          return [...old, data];
+          return old.map((cache) =>
+            cache.id === context.optimisticProduct.id ? data : cache
+          );
         }
       );
     }
