@@ -10,7 +10,19 @@ interface FormInputs {
 }
 
 export const NewProduct = () => {
-  const { control, handleSubmit } = useForm<FormInputs>();
+  const { control, handleSubmit, watch } = useForm<FormInputs>({
+    defaultValues: {
+      title: "Mystical Sapphire Hand Jewelry",
+      price: 499.99,
+      description:
+        "A stunning piece of hand jewelry crafted with intricate designs and adorned with sapphire-blue gemstones. The piece features delicate chains and elegant rings that flow into a beautifully crafted floral bracelet, embellished with a blue rose. Perfect for special occasions or to add a touch of mystique to any outfit.",
+      category: "jewelery",
+      image:
+        "https://i.pinimg.com/736x/3f/be/01/3fbe015846d2663ecb6dc647304db032.jpg"
+    }
+  });
+
+  const newImage = watch("image");
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     console.log(data);
@@ -43,7 +55,7 @@ export const NewProduct = () => {
               render={({ field }) => (
                 <Input
                   value={field.value?.toString()}
-                  onChange={field.onChange}
+                  onChange={(ev) => field.onChange(Number(ev.target.value))}
                   className="mt-2"
                   type="number"
                   label="Precio del producto"
@@ -103,7 +115,7 @@ export const NewProduct = () => {
             className="bg-white rounded-2xl p-10 flex items-center"
             style={{ width: "500px", height: "600px" }}
           >
-            <Image src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg" />
+            <Image src={newImage} />
           </div>
         </div>
       </form>
